@@ -1,58 +1,60 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div class="home">
+    <!-- <van-button color="#7232dd">单色按钮</van-button>
+    <van-button color="#7232dd" plain>单色按钮</van-button>
+    <van-button color="linear-gradient(to right, #ff6034, #ee0a24)">
+      渐变色按钮
+    </van-button> -->
+    <MyMarker @handleClick="handleClick" />
   </div>
 </template>
 
 <script>
+// import { Button } from 'vant';
+import { provide, ref, reactive } from 'vue'
+import MyMarker  from './myMarker'
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  components: {
+    MyMarker
+  },
+  setup() {
+    // const readersNumber = ref(0)
+    // const book = reactive({ title: 'Vue 3 Guide' })
+    // // Please note that we need to explicitly expose ref value here
+    // return () => h('div', [readersNumber.value, book.title])
+        const location = ref('North Pole')
+    const geolocation = reactive({
+      longitude: 90,
+      latitude: 135
+    })
+
+    provide('location', location)
+    provide('geolocation', geolocation)
+
+    return {
+      handleClick: () => {}
+    }
   }
 }
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+// // ref, reactive, 
+// export default {
+//   name: 'Home',
+//   components: {
+//     [Button.name]: Button
+//   },
+//   props: {
+//     msg: String
+//   },
+//   setup(props) {
+//     let data = toRefs(props)
+//     console.log('setup', data, 22)
+//     return {}
+//   },
+//   beforeCreate() {
+//     console.log('beforeCreate')
+//   },
+//   created() {
+//     console.log('created', this.msg)
+//   },
+// }
+// </script>
