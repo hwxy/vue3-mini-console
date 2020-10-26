@@ -87,20 +87,16 @@ module.exports = {
   // chainWebpack: webpackConfig => {
   //   // 修复HMR
   //   webpackConfig.resolve.symlinks(true);
-
   //   vueLoaderIgnore(webpackConfig);
-
   //   pages.forEach(page => {
   //     webpackConfig.plugins.delete(`prefetch-${page}`);
   //     webpackConfig.plugins.delete(`preload-${page}`);
   //   });
-
   //   webpackConfig.plugin('provide').use(webpack.ProvidePlugin, [
   //     {
   //       Vue: ['vue/dist/vue.runtime.esm.js', 'default']
   //     }
   //   ]);
-
   //   webpackConfig.plugin('define').tap(args => {
   //     Object.assign(args[0]['process.env'], customEnv);
   //     return args;
@@ -185,10 +181,8 @@ module.exports = {
   //     }
   //   }
   // },
-
   // //https://libin1991.github.io/vue-text-clamp/demo/?lang=zh
   // transpileDependencies: ['vue-clamp', 'resize-detector'],
-
   // // 构建时开启多进程处理 babel 编译
   // parallel: cpus > 1
 };

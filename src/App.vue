@@ -24,14 +24,23 @@
           class="trigger"
           @click="() => (collapsed = !collapsed)"
         />
-        <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
+        <menu-fold-outlined
+          v-else
+          class="trigger"
+          @click="() => (collapsed = !collapsed)"
+        />
       </a-layout-header>
       <a-layout-content
-        :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
+        :style="{
+          margin: '24px 16px',
+          padding: '24px',
+          background: '#fff',
+          minHeight: '280px'
+        }"
       >
-          <router-view></router-view>
+        <router-view></router-view>
       </a-layout-content>
-    </a-layout> 
+    </a-layout>
   </a-layout>
 </template>
 <script>
@@ -40,10 +49,10 @@ import {
   VideoCameraOutlined,
   UploadOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined,
-} from '@ant-design/icons-vue';
+  MenuFoldOutlined
+} from "@ant-design/icons-vue";
 
-import { Layout, Menu } from 'ant-design-vue'
+import { Layout, Menu } from "ant-design-vue";
 export default {
   components: {
     UserOutlined,
@@ -52,28 +61,28 @@ export default {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     [Layout.name]: Layout,
-    [Layout.Content.name]:  Layout.Content,
+    [Layout.Content.name]: Layout.Content,
     [Layout.Sider.name]: Layout.Sider,
     [Menu.name]: Menu,
-    [Menu.Item.name]: Menu.Item,
+    [Menu.Item.name]: Menu.Item
   },
   data() {
     return {
-      selectedKeys: ['1'],
-      collapsed: false, 
+      selectedKeys: ["1"],
+      collapsed: false
     };
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>
 .nav-container {
   .trigger {
-  font-size: 18px;
-  line-height: 64px; 
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
-}
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
   .trigger:hover {
     color: #1890ff;
   }
@@ -83,4 +92,4 @@ export default {
     margin: 16px;
   }
 }
-</style>  
+</style>
