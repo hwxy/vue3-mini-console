@@ -1,5 +1,5 @@
 {
-  "name": "hello-vue3",
+  "name": "min-console",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -36,25 +36,6 @@
     "sass": "^1.27.0",
     "sass-loader": "^10.0.4",
     "typescript": "~3.9.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended",
-      "@vue/typescript",
-      "@vue/typescript/recommended",
-      "@vue/prettier",
-      "@vue/prettier/@typescript-eslint"
-    ],
-    "parserOptions": {
-      "parser": "@typescript-eslint/parser",
-      "ecmaVersion": 2020
-    },
-    "rules": {}
   },
   "browserslist": [
     "> 1%",
