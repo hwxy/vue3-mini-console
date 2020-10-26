@@ -1,0 +1,23 @@
+.point {
+  cursor: pointer;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+.w_bk-a{
+  word-break: break-all;
+}
+.w_m-tr{
+  writing-mode: tb-rl;
+}
+.middle{
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  left:50%;
+}

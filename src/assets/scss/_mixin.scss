@@ -1,0 +1,47 @@
+@mixin scale($ratio...) {
+    -webkit-transform: scale($ratio);
+    -ms-transform: scale($ratio); // IE9 only
+    -o-transform: scale($ratio);
+    transform: scale($ratio);
+}
+
+@mixin transition($prop...) {
+    transition: $prop 0.3s ease-in-out;
+}
+
+@mixin list() {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+@mixin ellipsis() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin sortplaceholder() {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: none !important;
+    &:before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border: 5px solid transparent;
+        border-left-color: red;
+        margin-top: -5px;
+        border-right: none;
+    }
+}
+
+@mixin user-select($select) {
+    -webkit-user-select: $select;
+    -moz-user-select: $select;
+    -ms-user-select: $select; // IE10+
+    user-select: $select;
+}

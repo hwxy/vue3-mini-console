@@ -1,0 +1,59 @@
+// 5px ~ 40px
+@for $i from 0 to 30 {
+    .ml#{$i * 5} {
+        margin-left: $i * 5px !important;
+    }
+
+    .mr#{$i * 5} {
+        margin-right: $i * 5px !important;
+    }
+
+    .mt#{$i * 5} {
+        margin-top: $i * 5px !important;
+    }
+
+    .mb#{$i * 5} {
+        margin-bottom: $i * 5px !important;
+    }
+    .m#{$i * 5} {
+        margin: $i * 5px !important;
+    }
+}
+
+.nomargin{
+    margin-left:0!important;
+    margin-right:0!important;
+    margin-top:0!important;
+    margin-bottom:0!important;
+}
+
+.mt-20{
+    margin-top:-20px!important;
+}
+
+.mt-15{
+    margin-top:-15px!important;
+}
+
+.mt-10{
+    margin-top:-10px!important;
+}
+.ml-10{
+    margin-left:-10px!important;
+}
+
+.m_auto{
+    margin: 0 auto;
+}
+.ml-a{
+    margin-left: auto;
+}
+.mr-a{
+    margin-right: auto;
+}
+.mt-a{
+    margin-top: auto;
+}
+.mb-a{
+    margin-bottom: auto;
+}

@@ -1,0 +1,302 @@
+.el-button--text.active {
+    color: $green!important;
+}
+
+.el-button--text.gray {
+    color: $fontColor3;
+    &:focus,
+    &:hover{
+        color: mix($white,$fontColor3,20%)
+    }
+    &:active{
+        color: mix($black,$fontColor3,10%)
+    }
+}
+
+.el-button--text.danger:not(.is-disabled) {
+    &:hover,
+    &:focus{
+        color: $red;
+    }
+    &:active{
+        color: mix($black,$red,10%)
+    }
+    
+}
+.el-button--text.warning:not(.is-disabled) {
+    &:hover,
+    &:focus{
+        color: $orange;
+    }
+    &:active{
+        color: mix($black,$orange,10%)
+    }
+}
+.el-button--text.success:not(.is-disabled) {
+    &:hover,
+    &:focus{
+        color: $green;
+    }
+    &:active{
+        color: mix($black,$green,10%)
+    }
+}
+
+.el-button.helpicon{
+    height: 20px;
+    width: 20px;
+    padding: 0!important;
+    margin: 0;
+    border-radius: 50%;
+    &::after{
+        content: '?';
+    }
+}
+
+.el-radio.is-bordered{
+    .el-button.helpicon{
+        vertical-align: top;
+        position: relative;
+        top: -2px;
+    }
+}
+
+.el-button.warningicon{
+    height: 20px;
+    width: 20px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    &::after{
+        content: '!';
+    }
+}
+
+
+.el-dialog {
+    min-width: 450px;
+}
+
+.el-scrollbar__wrap{
+    box-sizing: content-box;
+}
+
+.table-input{
+    .cell{
+        overflow: visible!important;
+    }
+    .el-form-item{
+        margin-bottom: 0!important;
+    }
+}
+.el-tabs__header{
+    margin-bottom: 25px;
+}
+.el-input.is-disabled .el-input__inner{
+    color:#848484;
+}
+.el-textarea.is-disabled .el-textarea__inner{
+    color:#848484;
+}
+.el-range-editor.is-disabled input{
+    color:#848484;
+}
+.el-alert {
+    line-height: 1.15;
+    .alert-tip{
+        position: relative;
+        padding-left: 3em;
+        &::before{
+            content: '注意：';
+            position: absolute;
+            left: 0;
+        }
+    }
+    ul{
+        padding-left:20px;
+        font-size: 14px;
+        li{
+            list-style: decimal;
+            line-height: 1.3em;
+            margin-bottom: 0.5em;
+        }
+    }
+
+    p{
+        line-height: 1.3em;
+    }
+    &.el-alert--warning{
+        strong{
+            color: darken($color: $orange, $amount: 13)
+        }
+    }
+    &.el-alert--info{
+        strong{
+            color: darken($color: $gray, $amount: 13)
+        }
+    }
+    &.el-alert--error{
+        strong{
+            color: darken($color: $red, $amount: 13)
+        }
+    }
+}
+
+.el-table {
+    .el-table-column--selection{
+        > .cell{
+            overflow: hidden!important;
+        }
+    }
+    line-height: initial;
+    table {
+        cursor: not-allowed;
+    }
+    thead,tbody,tfoot{
+        cursor: auto;
+    }
+    td.overa > .cell{
+        overflow: auto;
+    }
+    td > .cell{
+        max-height: 250px;
+    }
+    .el-table__empty-text{
+        color: #bbb!important;
+    }
+    .header-row-light {
+        background-color: $color5;
+        color: $fontColor1;
+        th {
+          background-color: $color5;
+        }
+    }
+}
+
+.el-notification__content p{
+    word-break: break-all;
+}
+.el-select .el-tag{
+    color: #777;
+}
+.el-transfer-panel{
+    width:280px;
+    .el-transfer-panel__header{
+        .el-checkbox__label {
+            font-size: 14px !important;
+        }
+    }
+}
+.el-tabs__item{
+    color: $fontColor1;
+}
+
+.el-pagination__rightwrapper{
+    line-height: normal;
+}
+.el-tooltip__popper{
+    ul{
+        padding: 5px 0 5px 20px;
+        font-size: 14px;
+        margin: 0;
+        li{
+            list-style: decimal;
+            line-height: 1.1em;
+            margin-bottom: 0.5em;
+            &:last-of-type{
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.el-form-item__content{
+    color: $fontColor1;
+}
+
+.el-popper{
+    max-width: 100%;
+}
+
+.el-pagination--small{
+    .el-input--mini{
+        max-height: 22px;
+    }
+    a{
+        font-size: 12px;
+    }
+}
+
+.el-tree{
+    overflow: hidden;
+    &.minipoper{
+        min-width: 0;
+    }
+}
+
+.el-input {
+    input {
+      -webkit-appearance: textfield !important;
+    }
+}
+.prompt-warning {
+    .el-message-box__input {
+        padding-top: 5px;
+        padding-left: 36px;
+        .el-message-box__content {
+            padding-bottom: 0;
+        }
+    }
+}
+
+.tight{
+    .el-input-group__append {
+        padding: 0 10px;
+    }
+} 
+
+.el-form-item.is-error .el-input__inner {
+    border-color: $red !important;
+}
+
+.el-table__row.is-disabled,.el-table__row.is-disabled.current-row>td{
+    pointer-events: none;
+    background-color: #f5f7fa;
+    color: #c0c4cc;
+}
+
+.el-tree--highlight-current{
+    cursor: not-allowed;
+}
+.el-popper{
+    .el-tree:not(.is-multi){
+        .el-tree-node{
+            &[aria-disabled="true"]{
+                >.el-tree-node__content{
+                    color: #c0c4cc;
+                }
+            }
+        }
+    }
+}
+
+.el-form-item__error{
+    z-index: 3;
+}
+// 修复select 多选下拉框 选中项的勾与字重叠的问题
+.el-select-dropdown.is-multiple .el-select-dropdown__item {
+    padding-right:30px;
+    &.selected::after{
+        right: 10px
+    }
+}
+
+// 修复 换行后左边不对齐问题
+.el-radio-group.align-left {
+    margin-left: -10px;
+    margin-top: -10px;
+    & .el-radio{
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+}

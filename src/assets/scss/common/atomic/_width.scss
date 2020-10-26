@@ -1,0 +1,30 @@
+// 5% ~ 100%
+@for $i from 1 to 21 {
+    .w#{$i * 5} {
+        width: $i * 5% !important;
+    }
+}
+
+.w97{
+    width: 97% !important;
+}
+
+.wa{
+    width: auto !important;
+}
+
+.w0{
+    width: 0px !important;
+}
+
+@for $i from 1 to 120 {
+    .w-max#{$i * 10} {
+        max-width: $i * 10px !important;
+    }
+}
+
+@for $i from 1 to 40 {
+    .w-min#{$i * 10} {
+        min-width: $i * 10px !important;
+    }
+}

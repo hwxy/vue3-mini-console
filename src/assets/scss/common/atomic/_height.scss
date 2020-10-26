@@ -1,0 +1,15 @@
+// 5% ~ 100%
+@for $i from 1 to 21 {
+  .h#{$i * 5} {
+      height: $i * 5% !important;
+  }
+}
+
+.ha{
+  height: auto;
+}
+@for $i from 1 to 24 {
+  .h-min#{$i * 10} {
+      min-height: $i * 10px !important;
+  }
+}

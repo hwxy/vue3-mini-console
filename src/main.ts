@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import './plugins/vant.js'
+import './plugins/antd.ts'
 
 createApp(App).use(store).use(router).mount('#app')
 

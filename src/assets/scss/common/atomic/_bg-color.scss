@@ -1,0 +1,51 @@
+.bg_c-blue {
+  background-color: $blue;
+}
+
+.bg_c-green {
+  background-color: $green;
+}
+
+.bg_c-red {
+  background-color: $red;
+}
+
+.bg_c-gray4 {
+  background-color: $color4;
+}
+.bg_c-gray5 {
+  background-color: $color5;
+}
+
+.bg_c-warning {
+  background-color: #E6A23C;
+}
+
+
+.front {
+  &-gray1 {
+      color: $fontColor1;
+  }
+  &-gray2 {
+      color: $fontColor2;
+  }
+  &-gray3 {
+      color: $fontColor3;
+  }
+  &-gray4 {
+      color: $fontColor4;
+  }
+  &-blue {
+      color: $blue;
+  }
+  &-green {
+      color: $green;
+  }
+  &-red {
+      color: $red;
+  }
+  &-orange {
+      color: $orange;
+  }
+}
+

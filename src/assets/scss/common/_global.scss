@@ -1,0 +1,194 @@
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  font-size: 14px;
+  height: 100%;
+  color: $fontColor1;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+
+#app {
+  position: relative;
+  height: 100%;
+}
+
+.won-page {
+  padding: 20px 30px;
+  width: 100%;
+}
+
+.won-popover-page{
+  padding: 5px;
+}
+
+.won-form-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+.won-table-title {
+  font-size: 20px;
+}
+
+// .el-zoom-in-top-enter-active,
+// .el-zoom-in-top-leave-active {
+//   position: absolute;
+// }
+
+a{
+  text-decoration: none;
+  cursor: pointer;
+  color: $blue;
+  transition: 0.2s;
+  &:hover,
+  &:focus {
+    color: mix($white, $blue, 20%);
+  }
+  &:active {
+    color: mix(#000, $blue, 10%);
+  }
+
+  &.fake{
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      color: $fontColor2;
+      cursor: auto;
+      background-image: none;
+      border-color: $color1;
+    }
+  }
+}
+
+// 表格部分
+.word-inline > .cell {
+  word-break: normal;
+}
+.text-inline > .cell {
+  white-space: nowrap;
+}
+.vertical-tag { // 竖着的 el-tag
+  display: inline-block;
+  width: 1em;
+  line-height: 1.2em;
+  white-space: normal;
+  box-sizing: content-box;
+  height: auto;
+  vertical-align: middle;
+  padding: 5px;
+  margin-right: 10px;
+  & + * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.need-rebuild-tip {
+  margin-left: 20px;
+  color: $fontColor3;
+  &:after {
+      content: "重新生成应用生效";
+      margin-left: 5px;
+  }
+}
+
+.label-tips {
+  margin-left: 10px;
+  line-height: 1.2;
+  color: $fontColor3;
+}
+
+.blue-dot{
+  position: relative;
+  display: inline-block;
+  &:before{
+      content: "●";
+      color: #45A2FF;
+      position: absolute;
+      right: -15px;
+  }
+}
+
+hr{
+    box-sizing: content-box;
+    height: 1px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 0;
+    background: #eee;
+    background-clip: content-box;
+}
+
+.won-mask{
+  position: absolute;
+  z-index: 10;
+  background-color: rgba(255, 255, 255, .9);
+  margin: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: opacity 0.3s;
+}
+
+.special-field {
+  background: $color5;
+}
+
+.dotdotdot{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dot3-line2{
+ text-overflow: -o-ellipsis-lastline;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ display: -webkit-box;
+ -webkit-line-clamp: 2;
+ line-clamp: 2;
+ -webkit-box-orient: vertical;
+}
+
+
+
+.mobile-wrap {
+	position: fixed !important;
+	top: 0;
+	right:0;
+	bottom:0;
+	left: 0;
+	padding: 0px;
+	overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  
+  >.mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    right:0;
+    bottom:0;
+    left: 0;
+    background-color: rgba(0,0,0,.8);
+    z-index: 10;
+    > div {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      width: 30px;
+      height: 30px;
+      background-color: white;
+    }
+  }
+
+}
+
+.el-message-box.is-mobile,.el-message.is-mobile{
+  width: auto;
+  max-width: 100%;
+  min-width: 200px;
+}

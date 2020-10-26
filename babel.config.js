@@ -6,11 +6,11 @@ module.exports = {
     [
       "import",
       {
-        "libraryName": "vant",
+        "libraryName": "ant-design-vue",
         "libraryDirectory": "es",
-        "style": true
+        "style": false
       },
-      "vant"
+      "ant-design-vue"
     ]
   ]
 }
