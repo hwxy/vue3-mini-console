@@ -15,5 +15,8 @@ module.exports = {
       "parser": "@typescript-eslint/parser",
       "ecmaVersion": 2020
     },
-    "rules": {}
+    "rules": {
+      'no-console': 'off',
+      'no-debugger': 'off',
+    }
 }

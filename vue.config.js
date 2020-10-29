@@ -3,43 +3,29 @@ const path = require("path");
 const resolve = (dir = "") => path.join(__dirname, "./src", dir);
 
 module.exports = {
-  // devServer: {
-  //   host: '0.0.0.0',
-  //   port: '4200',
-  //   open: true,
-  //   openPage: 'login',
-  //   proxy: {
-  //     ...pages.reduce((res, page) => {
-  //       res[`^${config.baseUrl}${page}$`] = {
-  //         target: 'http://localhost:4200/',
-  //         pathRewrite: { [page]: `${page}.html` }
-  //       };
-  //       return res;
-  //     }, {}),
-  //     '/1.0': {
-  //       target: config.apiBase,
-  //       changeOrigin: true
-  //     }
-  //   }
-  // },
-  // chainWebpack: webpackConfig => {
-  //   // 修复HMR
-  //   webpackConfig.resolve.symlinks(true);
-  //   vueLoaderIgnore(webpackConfig);
-  //   pages.forEach(page => {
-  //     webpackConfig.plugins.delete(`prefetch-${page}`);
-  //     webpackConfig.plugins.delete(`preload-${page}`);
-  //   });
-  //   webpackConfig.plugin('provide').use(webpack.ProvidePlugin, [
-  //     {
-  //       Vue: ['vue/dist/vue.runtime.esm.js', 'default']
-  //     }
-  //   ]);
-  //   webpackConfig.plugin('define').tap(args => {
-  //     Object.assign(args[0]['process.env'], customEnv);
-  //     return args;
-  //   });
-  // },
+  devServer: {
+    host: "0.0.0.0",
+    port: "4200",
+    hot: true
+  },
+  chainWebpack: webpackConfig => {
+    // 修复HMR
+    webpackConfig.resolve.symlinks(true);
+    // vueLoaderIgnore(webpackConfig);
+    // pages.forEach(page => {
+    //   webpackConfig.plugins.delete(`prefetch-${page}`);
+    //   webpackConfig.plugins.delete(`preload-${page}`);
+    // });
+    // webpackConfig.plugin('provide').use(webpack.ProvidePlugin, [
+    //   {
+    //     Vue: ['vue/dist/vue.runtime.esm.js', 'default']
+    //   }
+    // ]);
+    // webpackConfig.plugin('define').tap(args => {
+    //   Object.assign(args[0]['process.env'], customEnv);
+    //   return args;
+    // });
+  },
   configureWebpack: () => {
     const config = {
       // devtool: 'source-map',
@@ -99,7 +85,6 @@ module.exports = {
   css: {
     // 是否构建样式地图，false 将提高构建速度
     sourceMap: false,
-    extract: { ignoreOrder: true },
     loaderOptions: {
       sass: {
         additionalData:

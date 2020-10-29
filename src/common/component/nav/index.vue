@@ -2,19 +2,49 @@
   <a-layout class="app-container">
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
       <div class="app-container__logo"></div>
-      <a-menu theme="dark" mode="inline" v-model:selectedKeys="selectedKeys">
+      <a-menu
+        v-model:openKeys="openKeys"
+        v-model:selectedKeys="selectedKeys"
+        mode="inline"
+        theme="dark"
+        :inline-collapsed="collapsed"
+      >
         <a-menu-item key="1">
-          <user-outlined />
-          <span>nav 1</span>
+          <PieChartOutlined />
+          <span>Option 1</span>
         </a-menu-item>
         <a-menu-item key="2">
-          <video-camera-outlined />
-          <span>nav 2</span>
+          <DesktopOutlined />
+          <span>Option 2</span>
         </a-menu-item>
         <a-menu-item key="3">
-          <upload-outlined />
-          <span>nav 3</span>
+          <InboxOutlined />
+          <span>Option 3</span>
         </a-menu-item>
+        <a-sub-menu key="sub1">
+          <template v-slot:title>
+            <span><MailOutlined /><span>Navigation One</span></span>
+          </template>
+          <a-menu-item key="5">Option 5</a-menu-item>
+          <a-menu-item key="6">Option 6</a-menu-item>
+          <a-menu-item key="7">Option 7</a-menu-item>
+          <a-menu-item key="8">Option 8</a-menu-item>
+        </a-sub-menu>
+        <a-sub-menu key="sub2">
+          <template v-slot:title>
+            <span><AppstoreOutlined /><span>Navigation Two</span></span>
+          </template>
+          <a-menu-item key="9">Option 9</a-menu-item>
+          <a-menu-item key="10">Option 10</a-menu-item>
+          <a-sub-menu key="sub3" title="Submenu">
+            <a-menu-item key="11">
+              Option 11
+            </a-menu-item>
+            <a-menu-item key="12">
+              Option 12
+            </a-menu-item>
+          </a-sub-menu>
+        </a-sub-menu>
       </a-menu>
     </a-layout-sider>
     <a-layout>
@@ -22,12 +52,12 @@
         <menu-unfold-outlined
           v-if="collapsed"
           class="menu-item__trigger"
-          @click="() => (collapsed = !collapsed)"
+          @click="toggleCollapsed"
         />
         <menu-fold-outlined
           v-else
           class="menu-item__trigger"
-          @click="() => (collapsed = !collapsed)"
+          @click="toggleCollapsed"
         />
       </a-layout-header>
       <a-layout-content class="app-container__content">
@@ -39,42 +69,57 @@
 <script lang="ts">
 // comp
 import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined
+  MenuFoldOutlined,
+  MailOutlined,
+  PieChartOutlined,
+  DesktopOutlined,
+  InboxOutlined,
+  AppstoreOutlined
 } from "@ant-design/icons-vue";
 import { Layout, Menu } from "ant-design-vue";
 // type
-import { defineComponent, ref, reactive } from "vue";
+import { defineComponent, ref, watch } from "vue";
 
-interface Data {
-  selectedKeys: string[];
-  collapsed: boolean;
-}
 const MiniNav = defineComponent({
   name: "MiniNav",
   components: {
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
     MenuUnfoldOutlined,
     MenuFoldOutlined,
+    MailOutlined,
+    PieChartOutlined,
+    DesktopOutlined,
+    InboxOutlined,
+    AppstoreOutlined,
     [Layout.name]: Layout,
     [Layout.Content.name]: Layout.Content,
     [Layout.Sider.name]: Layout.Sider,
     [Layout.Header.name]: Layout.Header,
     [Menu.name]: Menu,
-    [Menu.Item.name]: Menu.Item
+    [Menu.Item.name]: Menu.Item,
+    [Menu.SubMenu.name]: Menu.SubMenu
   },
   setup() {
     const collapsed = ref(false);
     const selectedKeys = ref(["1"]);
-
+    const openKeys = ref([]);
+    const preOpenKeys = ref([]);
+    watch(openKeys, (n, o) => {
+      preOpenKeys.value = o;
+    });
     return {
+      selectedKeys,
+      openKeys,
       collapsed,
-      selectedKeys
+      theme: "dark",
+      preOpenKeys,
+      handleMenuClick({ item, key, keyPath }: any) {
+        console.log(item, key, keyPath, 22);
+      },
+      toggleCollapsed() {
+        collapsed.value = !collapsed.value;
+        openKeys.value = collapsed.value ? [] : preOpenKeys.value;
+      }
     };
   }
 });

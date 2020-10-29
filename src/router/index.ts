@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 // util
 import asyncLoading from "common/utils/asyncLoading";
 
-let configRouters: any = [];
+let configRouters: RouteRecordRaw[] = [];
 const routers = require.context("./", true, /\.ts$/);
 routers.keys().forEach(key => {
   if (key === "./index.ts" || !routers(key).default) return;
