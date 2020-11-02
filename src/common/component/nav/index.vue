@@ -60,9 +60,11 @@
           @click="toggleCollapsed"
         />
       </a-layout-header>
-      <a-layout-content class="app-container__content">
-        <slot name="content"></slot>
-      </a-layout-content>
+      <nav-content>
+        <a-layout-content>
+          <slot name="content"></slot>
+        </a-layout-content>
+      </nav-content>
     </a-layout>
   </a-layout>
 </template>
@@ -79,7 +81,7 @@ import {
 } from "@ant-design/icons-vue";
 import { Layout, Menu } from "ant-design-vue";
 // type
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watch, h } from "vue";
 
 const MiniNav = defineComponent({
   name: "MiniNav",
@@ -97,7 +99,19 @@ const MiniNav = defineComponent({
     [Layout.Header.name]: Layout.Header,
     [Menu.name]: Menu,
     [Menu.Item.name]: Menu.Item,
-    [Menu.SubMenu.name]: Menu.SubMenu
+    [Menu.SubMenu.name]: Menu.SubMenu,
+    NavContent: {
+      name: "NavContent",
+      render() {
+        return h(
+          "div",
+          {
+            class: "app-container__content"
+          },
+          this.$slots.default()
+        );
+      }
+    }
   },
   setup() {
     const collapsed = ref(false);
@@ -158,7 +172,9 @@ export default MiniNav;
     padding: 24px;
     background: #fff;
     min-height: calc(100vh - 112px);
+    height: calc(100vh - 112px);
     box-sizing: border-box;
+    overflow: scroll;
   }
 }
 </style>

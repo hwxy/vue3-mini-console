@@ -10,10 +10,12 @@ function useDebouncedRef(value: number | string, delay = 2000) {
       },
       set(newValue: string | number) {
         clearTimeout(timeout);
-        timeout = setTimeout(() => {
-          value = newValue;
-          trigger();
-        }, delay);
+        timeout = Number(
+          setTimeout(() => {
+            value = newValue;
+            trigger();
+          }, delay)
+        );
       }
     };
   });

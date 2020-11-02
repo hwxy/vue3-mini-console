@@ -36,6 +36,18 @@
       <template v-slot:name="{ text }">
         {{ text.first }} {{ text.last }}
       </template>
+      <template v-slot:action>
+        <a-button type="link" @click="handleEdit">
+          <template v-slot:icon>
+            <FormOutlined />
+          </template>
+        </a-button>
+        <a-button type="link" @click="handleDelete">
+          <template v-slot:icon>
+            <DeleteOutlined />
+          </template>
+        </a-button>
+      </template>
     </a-table>
   </div>
 </template>
@@ -48,9 +60,11 @@ import MiniToolbar from "common/component/toolbar";
 // composition
 import useTable from "common/composables/useTable";
 // vue
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, h } from "vue";
 // util
 import { jumpToPush } from "common/utils/jumpTo";
+import showModal from "common/utils/showModal";
+import { FormOutlined, DeleteOutlined } from "@ant-design/icons-vue";
 const columnsData = [
   {
     title: "商品ID",
@@ -71,6 +85,12 @@ const columnsData = [
       { text: "规格1", value: "male" },
       { text: "规格2", value: "female" }
     ]
+  },
+  {
+    title: "Action",
+    key: "action",
+    slots: { customRender: "action" },
+    width: "20%"
   }
 ];
 
@@ -82,13 +102,9 @@ const ManageProduct = defineComponent({
     [Select.name]: Select,
     [Select.Option.name]: Select.Option,
     [MiniToolbar.name]: MiniToolbar,
-    [Button.name]: Button
-  },
-  created() {
-    console.log(this.$route, 11);
-  },
-  activated() {
-    console.log(this.$route, 22);
+    [Button.name]: Button,
+    FormOutlined,
+    DeleteOutlined
   },
   setup() {
     const {
@@ -114,6 +130,26 @@ const ManageProduct = defineComponent({
         jumpToPush("/productedit");
       }
     };
+  },
+  methods: {
+    handleDelete() {
+      this.$confirm({
+        title: "Do you want to delete these items?",
+        content:
+          "When clicked the OK button, this dialog will be closed after 1 second",
+        onOk() {
+          return new Promise((resolve, reject) => {
+            setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+          }).catch(() => console.log("Oops errors!"));
+        },
+        onCancel() {
+          console.log(ManageProduct);
+        }
+      });
+    },
+    handleEdit() {
+      showModal(h("div", 1));
+    }
   }
 });
 export default ManageProduct;
