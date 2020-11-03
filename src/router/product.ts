@@ -3,7 +3,8 @@ const config = [
     path: "/",
     name: "Product",
     meta: {
-      keepAlive: true
+      keepAlive: true,
+      sign: "product"
     },
     component: () =>
       import(/* webpackChunkName: "manage-product" */ "@/manage/product.vue")
@@ -11,6 +12,9 @@ const config = [
   {
     path: "/productedit",
     name: "ProductEdit",
+    meta: {
+      sign: "product"
+    },
     component: () =>
       import(
         /* webpackChunkName: "manage-product-edit" */ "@/manage/product-edit.vue"

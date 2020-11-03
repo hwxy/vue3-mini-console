@@ -3,7 +3,11 @@
     <template v-slot:content>
       <router-view v-slot="{ Component }">
         <keep-alive :exclude="$route.meta.exclude">
-          <component v-if="$route.meta.keepAlive" :is="Component" />
+          <component
+            :key="$route.meta.name"
+            v-if="$route.meta.keepAlive"
+            :is="Component"
+          />
         </keep-alive>
         <component v-if="!$route.meta.keepAlive" :is="Component" />
       </router-view>

@@ -8,20 +8,25 @@
         mode="inline"
         theme="dark"
         :inline-collapsed="collapsed"
+        @click="handleMenuClick"
       >
-        <a-menu-item key="1">
+        <a-menu-item
+          v-for="navItem in routes"
+          :key="navItem.key"
+          :router="navItem.router"
+        >
           <PieChartOutlined />
-          <span>Option 1</span>
+          <span>{{ navItem.navName }}</span>
         </a-menu-item>
-        <a-menu-item key="2">
+        <!-- <a-menu-item key="2">
           <DesktopOutlined />
           <span>Option 2</span>
         </a-menu-item>
         <a-menu-item key="3">
           <InboxOutlined />
           <span>Option 3</span>
-        </a-menu-item>
-        <a-sub-menu key="sub1">
+        </a-menu-item> -->
+        <!-- <a-sub-menu key="sub1">
           <template v-slot:title>
             <span><MailOutlined /><span>Navigation One</span></span>
           </template>
@@ -44,7 +49,7 @@
               Option 12
             </a-menu-item>
           </a-sub-menu>
-        </a-sub-menu>
+        </a-sub-menu> -->
       </a-menu>
     </a-layout-sider>
     <a-layout>
@@ -73,26 +78,31 @@
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  MailOutlined,
-  PieChartOutlined,
-  DesktopOutlined,
-  InboxOutlined,
-  AppstoreOutlined
+  // MailOutlined,
+  PieChartOutlined
+  // DesktopOutlined,
+  // InboxOutlined,
+  // AppstoreOutlined
 } from "@ant-design/icons-vue";
 import { Layout, Menu } from "ant-design-vue";
 // type
-import { defineComponent, ref, watch, h } from "vue";
-
+import { defineComponent, ref, watch, h, onUnmounted } from "vue";
+// json
+import routes from "./index.json";
+// util
+import { jumpToPush } from "common/utils/jumpTo";
+// router
+import router from "@/router";
 const MiniNav = defineComponent({
   name: "MiniNav",
   components: {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
-    MailOutlined,
+    // MailOutlined,
     PieChartOutlined,
-    DesktopOutlined,
-    InboxOutlined,
-    AppstoreOutlined,
+    // DesktopOutlined,
+    // InboxOutlined,
+    // AppstoreOutlined,
     [Layout.name]: Layout,
     [Layout.Content.name]: Layout.Content,
     [Layout.Sider.name]: Layout.Sider,
@@ -113,22 +123,44 @@ const MiniNav = defineComponent({
       }
     }
   },
+  watch: {
+    $route: {
+      handler(n) {
+        if (!n.meta.sign) return;
+        this.setSelectedKeys([n.meta.sign]);
+      },
+      immediate: true
+    }
+  },
   setup() {
     const collapsed = ref(false);
-    const selectedKeys = ref(["1"]);
+    const selectedKeys = ref<string[]>([location.pathname]);
     const openKeys = ref([]);
     const preOpenKeys = ref([]);
-    watch(openKeys, (n, o) => {
+    const unwatchOne = watch(openKeys, (n, o) => {
       preOpenKeys.value = o;
     });
+    onUnmounted(() => {
+      unwatchOne();
+    });
+
     return {
+      routes,
       selectedKeys,
       openKeys,
       collapsed,
       theme: "dark",
       preOpenKeys,
-      handleMenuClick({ item, key, keyPath }: any) {
-        console.log(item, key, keyPath, 22);
+      setSelectedKeys(value: string[]) {
+        selectedKeys.value = value;
+      },
+      handleMenuClick(params: {
+        key: string | number;
+        keyPath: string[] | number[];
+        item: any;
+        domEvent: MouseEvent;
+      }) {
+        jumpToPush(params.item.$attrs.router as string);
       },
       toggleCollapsed() {
         collapsed.value = !collapsed.value;

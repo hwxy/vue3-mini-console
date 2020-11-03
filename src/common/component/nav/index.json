@@ -1,0 +1,11 @@
+[{
+  "level": "menu",
+  "navName": "商品列表",
+  "router": "/",
+  "key": "product"
+},{
+  "level": "menu",
+  "navName": "测试",
+  "router": "/test",
+  "key": "test"
+}]
