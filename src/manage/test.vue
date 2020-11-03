@@ -1,6 +1,13 @@
 <template>
   <div>
-    2
+    <Suspense>
+      <template #default>
+        <async-component></async-component>
+      </template>
+      <template #fallback>
+        <div>正在拼了命的加载…</div>
+      </template>
+    </Suspense>
   </div>
 </template>
 
@@ -8,9 +15,31 @@
 // util
 // import { shallowReactive, reactive } from "common/utils/custom";
 // vue
-import { defineComponent, ref, h, reactive, readonly, watchEffect } from "vue";
+import {
+  defineComponent,
+  ref,
+  h,
+  reactive,
+  readonly,
+  watchEffect,
+  defineAsyncComponent
+} from "vue";
 
 const ManageTest = defineComponent({
+  components: {
+    asyncComponent: defineAsyncComponent(
+      () =>
+        new Promise(resolve => {
+          setTimeout(() => {
+            resolve({
+              render() {
+                return h("div", 12);
+              }
+            });
+          }, 5000);
+        })
+    )
+  },
   setup() {
     // const state = shallowReactive({
     //   a: "a",
@@ -53,7 +82,7 @@ const ManageTest = defineComponent({
     // const stateArr = reactive([
     //   {
     //     a: 1,
-    //     gf: {
+    //     gf:  {
     //       b: 2
     //     }
     //   }
