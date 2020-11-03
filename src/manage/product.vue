@@ -52,7 +52,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // comp
 import { Table, Select, Button } from "ant-design-vue";
 import MiniInput from "common/component/input";
@@ -64,6 +64,7 @@ import { defineComponent, ref, h } from "vue";
 // util
 import { jumpToPush } from "common/utils/jumpTo";
 import showModal from "common/utils/showModal";
+import { $confirm } from "common/utils/modelFunc";
 import { FormOutlined, DeleteOutlined } from "@ant-design/icons-vue";
 const columnsData = [
   {
@@ -128,28 +129,26 @@ const ManageProduct = defineComponent({
       handleTableChange,
       handleClick() {
         jumpToPush("/productedit");
+      },
+      handleEdit() {
+        showModal(h("div", 1));
+      },
+      handleDelete() {
+        $confirm({
+          title: "Do you want to delete these items?",
+          content:
+            "When clicked the OK button, this dialog will be closed after 1 second",
+          onOk() {
+            return new Promise((resolve, reject) => {
+              setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+            }).catch(() => console.log("Oops errors!"));
+          },
+          onCancel() {
+            console.log(ManageProduct);
+          }
+        });
       }
     };
-  },
-  methods: {
-    handleDelete() {
-      this.$confirm({
-        title: "Do you want to delete these items?",
-        content:
-          "When clicked the OK button, this dialog will be closed after 1 second",
-        onOk() {
-          return new Promise((resolve, reject) => {
-            setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-          }).catch(() => console.log("Oops errors!"));
-        },
-        onCancel() {
-          console.log(ManageProduct);
-        }
-      });
-    },
-    handleEdit() {
-      showModal(h("div", 1));
-    }
   }
 });
 export default ManageProduct;

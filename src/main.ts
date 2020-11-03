@@ -17,7 +17,8 @@ import { Modal, message, notification } from "ant-design-vue";
 import * as Sentry from "@sentry/browser";
 import { Vue as VueIntegration } from "@sentry/integrations";
 import { Integrations } from "@sentry/tracing";
-
+// const
+import { isDev } from "common/const/main";
 // 全局func
 const install = function(app: any) {
   app.config.globalProperties.$message = message;
@@ -30,24 +31,26 @@ const install = function(app: any) {
   app.config.globalProperties.$destroyAll = Modal.destroyAll;
 };
 
-const app: any = createApp(App)
+const app = createApp(App)
   .use(store)
   .use(router)
   .use(install);
 
 // 前端异常监控
-Sentry.init({
-  dsn:
-    "https://49169fee443b45bc983fd071369a37d1@o470385.ingest.sentry.io/5500911",
-  integrations: [
-    new VueIntegration({
-      Vue: app,
-      tracing: true
-    }),
-    new Integrations.BrowserTracing()
-  ],
-  tracesSampleRate: 1.0
-});
+if (!isDev) {
+  Sentry.init({
+    dsn:
+      "https://49169fee443b45bc983fd071369a37d1@o470385.ingest.sentry.io/5500911",
+    integrations: [
+      new VueIntegration({
+        Vue: app as any,
+        tracing: true
+      }),
+      new Integrations.BrowserTracing()
+    ],
+    tracesSampleRate: 1.0
+  });
+}
 
 // 错误信息处理
 // app.config.errorHandler = (err, vm, info) => {
@@ -66,3 +69,5 @@ app.config.globalProperties.$destroyAll = Modal.destroyAll;
 app.config.globalProperties.$findParent = findParent;
 
 app.mount("#app");
+
+export default app;
