@@ -2,7 +2,7 @@
   <div>
     <Suspense>
       <template #default>
-        <async-component></async-component>
+        <!-- <async-component></async-component> -->
       </template>
       <template #fallback>
         <div>正在拼了命的加载…</div>
@@ -27,18 +27,14 @@ import {
 
 const ManageTest = defineComponent({
   components: {
-    asyncComponent: defineAsyncComponent(
-      () =>
-        new Promise(resolve => {
-          setTimeout(() => {
-            resolve({
-              render() {
-                return h("div", 12);
-              }
-            });
-          }, 5000);
-        })
-    )
+    // asyncComponent: defineAsyncComponent({
+    //   loadingComponent: {
+    //     render() {
+    //       return h("div", "loading");
+    //     }
+    //   },
+    //   suspensible: false
+    // })
   },
   setup() {
     // const state = shallowReactive({
@@ -75,9 +71,9 @@ const ManageTest = defineComponent({
     watchEffect(() => {
       console.log(readonlyState.a, 22);
     });
-    state.a = 2;
+    state.a = "2";
     setTimeout(() => {
-      stateTwo.a = 3;
+      stateTwo.a = "3";
     }, 2000);
     // const stateArr = reactive([
     //   {
@@ -100,4 +96,4 @@ const ManageTest = defineComponent({
 });
 export default ManageTest;
 </script>
-<style lang="scss"></style>
+<style lang="scss" scoped></style>

@@ -1,7 +1,7 @@
-import { defineAsyncComponent } from "vue";
+import { defineAsyncComponent, AsyncComponentLoader } from "vue";
 import MiniLoading from "common/component/loading";
 
-const asyncLoadingFunc = (Component: any) =>
+const asyncLoadingFunc = (Component: AsyncComponentLoader) =>
   defineAsyncComponent({
     // 工厂函数
     loader: Component,
