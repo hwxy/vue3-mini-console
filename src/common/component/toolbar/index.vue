@@ -27,10 +27,9 @@ const MiniToolbar = defineComponent({
 });
 export default MiniToolbar;
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .mini-toolbar {
   display: flex;
-  // margin-bottom: 10px;
 }
 .mini-toolbar-left {
   flex: 1;

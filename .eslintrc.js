@@ -16,7 +16,8 @@ module.exports = {
       "ecmaVersion": 2020
     },
     "rules": {
-      'no-console': 'off',
-      'no-debugger': 'off',
+      'no-console': "off",
+      'no-debugger': "off",
+      "@typescript-eslint/no-explicit-any": "off"
     }
 }

@@ -7,7 +7,7 @@ const config = [
       sign: "test"
     },
     component: () =>
-      import(/* webpackChunkName: "manage-test" */ "@/manage/test.vue")
+      import(/* webpackChunkName: "manage-test" */ "@/pages/manage/test.vue")
   }
 ];
 export default config;

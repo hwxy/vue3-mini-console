@@ -1,37 +1,51 @@
-import { ref, watch, reactive, onUnmounted, watchEffect } from "vue";
+import { ref, reactive } from "vue";
 // util
 import { apiGet } from "common/network";
 import { get } from "lodash";
 // compostion api
 import useDebouncedRef from "./useDebouncedRef";
+
+interface TableParams {
+  limit: number;
+  page: number;
+}
 interface TableConfig {
   url: string;
+  params: TableParams;
 }
 
 export default function useTable(config: TableConfig) {
   const url = get(config, "url", "");
+  const params = get(config, "params", {
+    limit: 10,
+    page: 1
+  });
   const data = ref<any[]>([]);
   const loading = ref<boolean>(false);
   const pagination = ref<{
     total: number;
-    current: number;
+    page: number;
   }>({
     total: 0,
-    current: 0
+    page: 1
   });
   const inputValue = useDebouncedRef("");
   const fetch = (params = {}) => {
     loading.value = true;
     apiGet(url, {
-      results: 10,
       ...params
-    }).then((res: any) => {
-      const newPagination = { ...pagination.value };
-      newPagination.total = 200;
-      loading.value = false;
-      data.value = res.results;
-      pagination.value = reactive(newPagination);
-    });
+    }).then(
+      res => {
+        const newPagination = { ...pagination.value };
+        newPagination.total = get(res, "data.total", 0);
+        loading.value = false;
+        data.value = get(res, "data.productlist", []);
+        pagination.value = reactive(newPagination);
+      },
+      () => {
+        loading.value = true;
+      }
+    );
   };
 
   const handleTableChange = (
@@ -51,13 +65,13 @@ export default function useTable(config: TableConfig) {
     }
   ) => {
     const pager: {
-      current: number;
+      page: number;
       total: number;
     } = { ...pagination.value };
-    pager.current = newpagination.current;
+    pager.page = newpagination.current;
     pagination.value = pager;
     fetch({
-      results: newpagination.pageSize,
+      limit: params.limit,
       page: newpagination.current,
       sortField: sorter.field,
       sortOrder: sorter.order,
@@ -65,15 +79,15 @@ export default function useTable(config: TableConfig) {
     });
   };
 
-  fetch();
+  fetch(params);
 
-  const unwatch = watch(inputValue, (n, o) => {
-    console.log(11);
-  });
+  // const unwatch = watch(inputValue, (n, o) => {
+  //   console.log(11);
+  // });
 
-  onUnmounted(() => {
-    unwatch();
-  });
+  // onUnmounted(() => {
+  //   unwatch();
+  // });
 
   return {
     inputValue,

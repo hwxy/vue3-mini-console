@@ -2,7 +2,7 @@
   <a-input
     :modeValue="modeValue"
     @input="$emit('update:modelValue', $event.target.value)"
-    class="w-max200"
+    class="w-max250"
   >
     <template v-slot:addonBefore>
       <slot name="addonBefore"></slot>

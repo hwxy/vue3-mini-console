@@ -1,7 +1,7 @@
 [{
   "level": "menu",
   "navName": "商品列表",
-  "router": "/",
+  "router": "/product",
   "key": "product"
 },{
   "level": "menu",

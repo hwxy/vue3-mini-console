@@ -7,6 +7,41 @@ module.exports = {
     host: "0.0.0.0",
     port: "4200",
     hot: true
+    // proxy: {
+    //   "/": {
+    //     target: "/login"
+    //   }
+    // }
+  },
+  pages: {
+    login: {
+      // page 的入口
+      entry: "src/entry/login/main.ts",
+      // 模板来源
+      // template: "public/index.html",
+      // 在 dist/index.html 的输出
+      filename: "template/login/index.html",
+      // 当使用 title 选项时，
+      // template 中的 title 标签需要是 <title><%= htmlWebpackPlugin.options.title %></title>
+      title: "登录",
+      // 在这个页面中包含的块，默认情况下会包含
+      // 提取出来的通用 chunk 和 vendor chunk。
+      chunks: ["chunk-vendors", "chunk-common", "login"]
+    },
+    manage: {
+      // page 的入口
+      entry: "src/entry/manage/main.ts",
+      // 模板来源
+      // template: "public/index.html",
+      // 在 dist/index.html 的输出
+      filename: "template/manage/index.html",
+      // 当使用 title 选项时，
+      // template 中的 title 标签需要是 <title><%= htmlWebpackPlugin.options.title %></title>
+      title: "管理",
+      // 在这个页面中包含的块，默认情况下会包含
+      // 提取出来的通用 chunk 和 vendor chunk。
+      chunks: ["chunk-vendors", "chunk-common", "manage"]
+    }
   },
   chainWebpack: webpackConfig => {
     // 修复HMR

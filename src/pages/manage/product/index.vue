@@ -4,12 +4,13 @@
       <template v-slot:left>
         <mini-input v-model="inputValue">
           <template v-slot:addonBefore>
-            <a-select v-model:value="selectValue" style="width: 90px">
-              <a-select-option value="Http://">
-                Http://
-              </a-select-option>
-              <a-select-option value="Https://">
-                Https://
+            <a-select v-model:value="selectValue" style="width: 100px">
+              <a-select-option
+                v-for="data in productSelectOptions"
+                :key="data.id"
+                :value="data.value"
+              >
+                {{ data.label }}
               </a-select-option>
             </a-select>
           </template>
@@ -27,22 +28,19 @@
         'data-source': data,
         pagination: pagination,
         loading: loading,
-        'row-key': record => record.login.uuid
+        'row-key': record => record.id
       }"
       v-on="{
         change: handleTableChange
       }"
     >
-      <template v-slot:name="{ text }">
-        {{ text.first }} {{ text.last }}
-      </template>
-      <template v-slot:action>
-        <a-button type="link" @click="handleEdit">
+      <template #action="row">
+        <a-button type="link" @click="handleEdit(row)">
           <template v-slot:icon>
             <FormOutlined />
           </template>
         </a-button>
-        <a-button type="link" @click="handleDelete">
+        <a-button type="link" danger @click="handleDelete(row)">
           <template v-slot:icon>
             <DeleteOutlined />
           </template>
@@ -59,33 +57,31 @@ import MiniInput from "common/component/input";
 import MiniToolbar from "common/component/toolbar";
 // composition
 import useTable from "common/composables/useTable";
+import useJump from "common/composables/useJump";
+import useCurrentInstance from "common/composables/useCurrentInstance";
 // vue
-import { defineComponent, ref, h } from "vue";
-// util
-import { jumpToPush } from "common/utils/jumpTo";
-import showModal from "common/utils/showModal";
-import { $confirm } from "common/utils/modelFunc";
+import { defineComponent, ref } from "vue";
+// import { $confirm } from "common/utils/modelFunc";
 import { FormOutlined, DeleteOutlined } from "@ant-design/icons-vue";
-const columnsData = [
+const tableColumnsData = [
   {
     title: "商品ID",
-    dataIndex: "name",
+    dataIndex: "id",
     sorter: true,
-    width: "20%",
-    slots: { customRender: "name" }
-  },
-  {
-    title: "商品名称",
-    dataIndex: "gender",
     width: "20%"
   },
   {
-    title: "商品参数",
-    dataIndex: "email",
-    filters: [
-      { text: "规格1", value: "male" },
-      { text: "规格2", value: "female" }
-    ]
+    title: "商品名称",
+    dataIndex: "productName",
+    width: "20%"
+  },
+  {
+    title: "库存",
+    dataIndex: "inventory"
+  },
+  {
+    title: "型号",
+    dataIndex: "model"
   },
   {
     title: "Action",
@@ -95,13 +91,24 @@ const columnsData = [
   }
 ];
 
+const productSelectOptions = [
+  {
+    label: "商品ID",
+    value: "id"
+  },
+  {
+    label: "商品名称",
+    value: "product"
+  }
+];
+
 const ManageProduct = defineComponent({
   name: "product",
   components: {
     [Table.name]: Table,
     [MiniInput.name]: MiniInput,
     [Select.name]: Select,
-    [Select.Option.name]: Select.Option,
+    "a-select-option": Select.Option,
     [MiniToolbar.name]: MiniToolbar,
     [Button.name]: Button,
     FormOutlined,
@@ -115,9 +122,18 @@ const ManageProduct = defineComponent({
       pagination,
       inputValue
     } = useTable({
-      url: "https://randomuser.me/api"
+      url:
+        "https://mock.mengxuegu.com/mock/611ce7233d1d4a721df5a027/product/product",
+      params: {
+        limit: 10,
+        page: 1
+      }
     });
-    const selectValue = ref("Http://");
+
+    const { $confirm } = useCurrentInstance();
+    const selectValue = ref("id");
+
+    const { jumpRouterPush } = useJump();
 
     return {
       inputValue,
@@ -125,13 +141,14 @@ const ManageProduct = defineComponent({
       data,
       pagination,
       loading,
-      columns: columnsData,
+      columns: tableColumnsData,
+      productSelectOptions,
       handleTableChange,
       handleClick() {
-        jumpToPush("/productedit");
+        jumpRouterPush("/productAddEdit");
       },
-      handleEdit() {
-        showModal(h("div", 1));
+      handleEdit(row: any) {
+        jumpRouterPush(`/productAddEdit/${row.text.id}`);
       },
       handleDelete() {
         $confirm({

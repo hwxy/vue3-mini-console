@@ -10,12 +10,12 @@ const asyncLoadingFunc = (Component: AsyncComponentLoader) =>
     // 加载失败时要使用的组件
     // errorComponent: ErrorComponent,
     // 在显示 loadingComponent 之前的延迟 | 默认值：200（单位 ms）
-    delay: 200,
+    delay: 0,
     // 如果提供了 timeout ，并且加载组件的时间超过了设定值，将显示错误组件
     // 默认值：Infinity（即永不超时，单位 ms）
     timeout: 3000,
     // 定义组件是否可挂起 | 默认值：true
-    suspensible: false,
+    // suspensible: false,
     /**
      *
      * @param {*} error 错误信息对象

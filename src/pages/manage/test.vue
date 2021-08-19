@@ -1,13 +1,14 @@
 <template>
   <div>
-    <Suspense>
+    <!-- <Suspense>
       <template #default>
-        <!-- <async-component></async-component> -->
+        <async-component></async-component>
       </template>
       <template #fallback>
         <div>正在拼了命的加载…</div>
       </template>
-    </Suspense>
+    </Suspense> -->
+    1123
   </div>
 </template>
 

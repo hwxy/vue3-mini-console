@@ -26,7 +26,7 @@ const MiniLoading = defineComponent({
 });
 export default MiniLoading;
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @keyframes lds-wedges {
   0% {
     -webkit-transform: rotate(0deg);

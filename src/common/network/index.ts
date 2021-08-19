@@ -15,7 +15,7 @@ interface CancelData {
   cancel?: any;
 }
 
-export const apiGet = (url: string, params = {}) => {
+export const apiGet = (url: string, params = {}): Promise<any> => {
   const cancelData: CancelData = {
     url: ""
   };

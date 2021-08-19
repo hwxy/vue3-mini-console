@@ -1,22 +1,38 @@
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 // util
-import { jumpToBack } from "common/utils/jumpTo";
 import lfind from "lodash/find";
 import findParent from "common/utils/findParent";
+import useJump from "common/composables/useJump";
+
 export default function useForm(
-  data: object,
-  getForm?: Function,
+  data: any,
+  getForm?: () => Promise<any>,
   setForm?: Function
 ) {
-  // ref接收dom  必须return的时候返回才能拿到
-  const form = reactive(data);
+  // 跳转
+  const { jumpRouterBack } = useJump();
+
+  const form = ref(data);
   const ruleForm: any = ref(null);
+  // 请求loading
+  const loading = ref<boolean>(true);
   // ref接收dom  必须return的时候返回才能拿到
+  const fetch = async () => {
+    loading.value = true;
+    if (getForm) {
+      const data = await getForm();
+      form.value = data;
+    }
+    loading.value = false;
+  };
+
+  fetch();
   return {
+    formLoading: loading,
     ruleForm,
     form,
     goBack() {
-      jumpToBack();
+      jumpRouterBack();
     },
     labelCol: { span: 4 },
     wrapperCol: { span: 10 },
@@ -28,12 +44,16 @@ export default function useForm(
         })
         .catch((error: any) => {
           const errorFields = error.errorFields;
-          const dom = lfind(ruleForm.value.fields, item => {
+          const formItem = lfind(ruleForm.value.fields, item => {
             return errorFields[0].name == item.name;
-          }).$el;
-          const top = dom.getBoundingClientRect().top;
-          const paraent = findParent(ruleForm.value, "NavContent").$el;
-          paraent.scrollTop = paraent.scrollTop + top - 90;
+          });
+          if (formItem) {
+            const dom = formItem.$el;
+            const top = dom.getBoundingClientRect().top;
+            const paraent = findParent(ruleForm.value, "NavContent").$el;
+            paraent.scrollTop = paraent.scrollTop + top - 90;
+            return;
+          }
         });
     },
     resetForm() {

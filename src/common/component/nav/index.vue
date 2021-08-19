@@ -7,7 +7,6 @@
         v-model:selectedKeys="selectedKeys"
         mode="inline"
         theme="dark"
-        :inline-collapsed="collapsed"
         @click="handleMenuClick"
       >
         <a-menu-item
@@ -18,38 +17,6 @@
           <PieChartOutlined />
           <span>{{ navItem.navName }}</span>
         </a-menu-item>
-        <!-- <a-menu-item key="2">
-          <DesktopOutlined />
-          <span>Option 2</span>
-        </a-menu-item>
-        <a-menu-item key="3">
-          <InboxOutlined />
-          <span>Option 3</span>
-        </a-menu-item> -->
-        <!-- <a-sub-menu key="sub1">
-          <template v-slot:title>
-            <span><MailOutlined /><span>Navigation One</span></span>
-          </template>
-          <a-menu-item key="5">Option 5</a-menu-item>
-          <a-menu-item key="6">Option 6</a-menu-item>
-          <a-menu-item key="7">Option 7</a-menu-item>
-          <a-menu-item key="8">Option 8</a-menu-item>
-        </a-sub-menu>
-        <a-sub-menu key="sub2">
-          <template v-slot:title>
-            <span><AppstoreOutlined /><span>Navigation Two</span></span>
-          </template>
-          <a-menu-item key="9">Option 9</a-menu-item>
-          <a-menu-item key="10">Option 10</a-menu-item>
-          <a-sub-menu key="sub3" title="Submenu">
-            <a-menu-item key="11">
-              Option 11
-            </a-menu-item>
-            <a-menu-item key="12">
-              Option 12
-            </a-menu-item>
-          </a-sub-menu>
-        </a-sub-menu> -->
       </a-menu>
     </a-layout-sider>
     <a-layout>
@@ -78,31 +45,24 @@
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  // MailOutlined,
   PieChartOutlined
-  // DesktopOutlined,
-  // InboxOutlined,
-  // AppstoreOutlined
 } from "@ant-design/icons-vue";
 import { Layout, Menu } from "ant-design-vue";
 // type
 import { defineComponent, ref, watch, h, onUnmounted } from "vue";
 // json
 import routes from "./index.json";
-// util
-import { jumpToPush } from "common/utils/jumpTo";
 // router
-import router from "@/router";
+import { useRoute } from "vue-router";
+
+import useJump from "common/composables/useJump";
+
 const MiniNav = defineComponent({
   name: "MiniNav",
   components: {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
-    // MailOutlined,
     PieChartOutlined,
-    // DesktopOutlined,
-    // InboxOutlined,
-    // AppstoreOutlined,
     [Layout.name]: Layout,
     [Layout.Content.name]: Layout.Content,
     [Layout.Sider.name]: Layout.Sider,
@@ -123,23 +83,27 @@ const MiniNav = defineComponent({
       }
     }
   },
-  watch: {
-    $route: {
-      handler(n) {
-        if (!n.meta.sign) return;
-        this.setSelectedKeys([n.meta.sign]);
-      },
-      immediate: true
-    }
-  },
   setup() {
+    const $route = useRoute();
+
+    const { jumpRouterPush } = useJump();
+
     const collapsed = ref(false);
     const selectedKeys = ref<string[]>([location.pathname]);
     const openKeys = ref([]);
     const preOpenKeys = ref([]);
-    const unwatchOne = watch(openKeys, (n, o) => {
-      preOpenKeys.value = o;
-    });
+
+    const setSelectedKeys = (value: string[]) => {
+      selectedKeys.value = value;
+    };
+
+    const unwatchOne = watch(
+      () => $route.meta,
+      to => {
+        setSelectedKeys([to.sign] as Array<string>);
+      }
+    );
+
     onUnmounted(() => {
       unwatchOne();
     });
@@ -151,20 +115,19 @@ const MiniNav = defineComponent({
       collapsed,
       theme: "dark",
       preOpenKeys,
-      setSelectedKeys(value: string[]) {
-        selectedKeys.value = value;
-      },
+      setSelectedKeys,
       handleMenuClick(params: {
         key: string | number;
         keyPath: string[] | number[];
         item: any;
         domEvent: MouseEvent;
       }) {
-        jumpToPush(params.item.$attrs.router as string);
+        jumpRouterPush(params.key as string);
       },
       toggleCollapsed() {
         collapsed.value = !collapsed.value;
         openKeys.value = collapsed.value ? [] : preOpenKeys.value;
+        preOpenKeys.value = openKeys.value;
       }
     };
   }
