@@ -19,10 +19,14 @@
       </a-form-item>
       <a-form-item label="上传商品图片" name="pics">
         <mini-upload
-          @change="handleChange"
+          @change="handleUploadChange"
           v-if="!formLoading"
           :filelist="form.pics"
         ></mini-upload>
+      </a-form-item>
+
+      <a-form-item label="商品详情" name="productDetail">
+        <mini-tinymce v-model:value="form.productDetail"></mini-tinymce>
       </a-form-item>
       <a-form-item class="mt15" :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmit">
@@ -49,8 +53,9 @@ import {
   Checkbox
 } from "ant-design-vue";
 import MiniUpload from "common/component/upload";
+import MiniTinymce from "common/component/tinymce";
 // vue
-import { defineComponent } from "vue";
+import { defineComponent, markRaw, reactive } from "vue";
 // composables
 import useForm from "common/composables/useForm";
 // ajax
@@ -73,7 +78,8 @@ const ProductEdit = defineComponent({
     [Switch.name]: Switch,
     [Checkbox.name]: Checkbox,
     [Checkbox.Group.name]: Checkbox.Group,
-    [MiniUpload.name]: MiniUpload
+    [MiniUpload.name]: MiniUpload,
+    [MiniTinymce.name]: MiniTinymce
   },
   props: {
     id: String
@@ -84,7 +90,8 @@ const ProductEdit = defineComponent({
         productName: "",
         inventory: 0,
         model: "",
-        pics: []
+        pics: [],
+        productDetail: "123"
       },
       () => {
         return apiGet(
@@ -94,13 +101,16 @@ const ProductEdit = defineComponent({
           }
         ).then(res => {
           const product = get(res, "data.product", {});
-          product.pics = product.pics.map((item: any, index: number) => {
-            return {
-              ...item,
-              status: "done",
-              uid: -index
-            };
-          });
+          product.pics = markRaw(
+            product.pics.map((item: any, index: number) => {
+              return {
+                ...item,
+                status: "done",
+                uid: -index
+              };
+            })
+          );
+          product.pics = []
           const data = product;
           return data;
         });
@@ -110,13 +120,14 @@ const ProductEdit = defineComponent({
       }
     );
 
-    const handleChange = (pics: any) => {
-      formData.form.pics = pics;
-      console.log(formData.form.pics);
+    const handleUploadChange = (pics: any) => {
+      formData.form.value.pics = pics;      
     };
 
     return {
       ...formData,
+      labelCol: { span: 4 },
+      wrapperCol: { span: 12 },
       rules: {
         productName: [
           {
@@ -146,9 +157,16 @@ const ProductEdit = defineComponent({
             message: "请上传图片",
             type: "array"
           }
+        ],
+        productDetail: [
+          {
+            required: true,
+            message: "请填写商品详情",
+            type: "string"
+          }
         ]
       },
-      handleChange
+      handleUploadChange
     };
   }
 });

@@ -1,5 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require("path");
+
+const CopyPlugin = require("copy-webpack-plugin");
+
 const resolve = (dir = "") => path.join(__dirname, "./src", dir);
 
 module.exports = {
@@ -7,11 +10,6 @@ module.exports = {
     host: "0.0.0.0",
     port: "4200",
     hot: true
-    // proxy: {
-    //   "/": {
-    //     target: "/login"
-    //   }
-    // }
   },
   pages: {
     login: {
@@ -69,7 +67,15 @@ module.exports = {
           common: resolve("common"),
           assets: resolve("assets")
         }
-      }
+      },
+      plugins: [
+        // new CopyPlugin([
+        //   {
+        //     from: "/Users/xiongxiong/项目/hu/mini-console/public",
+        //     to: "/Users/xiongxiong/项目/hu/mini-console/dist",
+        //   }
+        // ])
+      ]
       // optimization: {
       //   runtimeChunk: {
       //     name: entrypoint => `runtime~${entrypoint.name}`

@@ -18,6 +18,10 @@ module.exports = {
     "rules": {
       'no-console': "off",
       'no-debugger': "off",
-      "@typescript-eslint/no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/camelcase": "off"
+    },
+    "globals": {
+      "tinyMCE": true
     }
 }

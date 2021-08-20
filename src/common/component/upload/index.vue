@@ -1,5 +1,5 @@
 <template>
-  <div class="clearfix">
+  <div>
     <a-upload
       :beforeUpload="handleBeforeUpload"
       list-type="picture-card"
@@ -7,20 +7,20 @@
       @preview="handlePreview"
       @change="handleChange"
     >
-      <div v-if="fileList.length < 8" @click="handleUpload">
+      <div v-if="fileList.length < max" @click="handleUpload">
         <plus-outlined />
         <div class="ant-upload-text">上传</div>
       </div>
     </a-upload>
-    <!-- <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+    <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
       <img alt="example" style="width: 100%" :src="previewImage" />
-    </a-modal> -->
+    </a-modal>
   </div>
 </template>
 <script lang="ts">
 // comp
 import { PlusOutlined } from "@ant-design/icons-vue";
-import { Upload } from "ant-design-vue";
+import { Upload, Modal } from "ant-design-vue";
 // vue
 import { defineComponent, ref } from "vue";
 // ajax
@@ -55,9 +55,14 @@ const MiniUpload = defineComponent({
   name: "MiniUpload",
   components: {
     PlusOutlined,
-    [Upload.name]: Upload
+    [Upload.name]: Upload,
+    [Modal.name]: Modal
   },
   props: {
+    max: {
+      type: Number,
+      default: 8
+    },
     filelist: {
       type: Array,
       default: () => []
@@ -70,7 +75,7 @@ const MiniUpload = defineComponent({
 
     const uploading = ref<boolean>(false);
 
-    const fileList = ref<FileItem[]>(props.filelist);
+    const fileList = ref<any[]>(props.filelist);
 
     const handleCancel = () => {
       previewVisible.value = false;
@@ -127,7 +132,6 @@ const MiniUpload = defineComponent({
 export default MiniUpload;
 </script>
 <style lang="scss" scoped>
-/* you can make up upload button and sample style by using stylesheets */
 .ant-upload-select-picture-card i {
   font-size: 32px;
   color: #999;

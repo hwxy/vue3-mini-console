@@ -1,6 +1,9 @@
 import { AxiosResponse, AxiosError } from "axios";
 // base ui comp
 import { get } from "lodash";
+// ui
+import { notification } from "ant-design-vue";
+
 export const response = ({ data }: AxiosResponse) => {
   return data;
 };
@@ -41,13 +44,21 @@ export const responseError = (error: AxiosError) => {
     }
 
     // Toast.fail(`请求错误. error: ${message}`);
-  } else {
-    // Toast.fail("请求错误");
+  } else if (error.message) {
+    notification.error({
+      message: error.message,
+      description: "网络错误"
+    });
   }
 
-  setTimeout(() => {
-    // Toast.hide();
-  }, 2000);
+  // notification.error({
+  //   message: "Notification Title",
+  //   description:
+  //     "This is the content of the notification. This is the content of the notification. This is the content of the notification."
+  // });
+  // setTimeout(() => {
+
+  // }, 2000);
 
   throw error;
 };
