@@ -15,6 +15,7 @@ import { Integrations } from "@sentry/tracing";
 import { isDev } from "common/const/main";
 
 const a = 1;
+console.log(b);
 
 // 全局func
 const install = function(app: any) {
