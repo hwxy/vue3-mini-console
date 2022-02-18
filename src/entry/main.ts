@@ -14,9 +14,6 @@ import { Integrations } from "@sentry/tracing";
 // const
 import { isDev } from "common/const/main";
 
-const a = 1;
-console.log(b);
-
 // 全局func
 const install = function(app: any) {
   app.config.globalProperties.$message = message;
